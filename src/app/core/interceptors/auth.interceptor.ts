@@ -8,7 +8,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem('token');
 
   let modifiedReq = req;
-  if (token) {
+  if (token && !req.headers.has('Authorization')) {
     modifiedReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
@@ -20,7 +20,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
         localStorage.removeItem('token');
-        router.navigate(['/login']);
+        // Do not redirect if we are on the verification page
+        const isVerificationPage = window.location.pathname.toLowerCase().includes('/certificates/verification');
+        if (!isVerificationPage) {
+          router.navigate(['/login']);
+        }
       }
       return throwError(() => error);
     })

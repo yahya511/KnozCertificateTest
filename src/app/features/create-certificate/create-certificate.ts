@@ -20,7 +20,7 @@ export class CreateCertificate {
   private readonly certificateService = inject(CertificateService);
   private readonly languageService = inject(LanguageService);
   selectedTemplate: 'classic' | 'elegant' | 'quran' = 'classic';
-
+  sspId?: number;
 
   certificateForm = this.fb.nonNullable.group({
     studentName: ['', [Validators.required, Validators.minLength(3)]],
@@ -38,6 +38,8 @@ export class CreateCertificate {
     if (state && state.prefillData) {
       const data = state.prefillData;
       
+      this.sspId = data.sspId;
+
       this.certificateForm.patchValue({
         studentName: data.studentName,
         courseName: data.courseName
@@ -71,6 +73,8 @@ export class CreateCertificate {
 
     const certificate:Certificate = {
       id: this.certificateService.generateCertificateId(),
+
+      sspId: this.sspId,
 
       studentName: formValue.studentName.trim(),
 

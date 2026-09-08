@@ -39,7 +39,8 @@ export class CertificatePreview implements OnInit {
 
   ngOnInit(): void {
     if (this.certificate?.id) {
-      this.generateQrCode(this.certificate.id);
+      const qrData = this.certificate.sspId ? `https://knoz-certificate.vercel.app/certificates/Verification/${this.certificate.sspId}` : this.certificate.id;
+      this.generateQrCode(qrData);
     }
   }
 
@@ -98,6 +99,30 @@ export class CertificatePreview implements OnInit {
       const pdfHeight = (elementHeight * pdfWidth) / elementWidth;
 
       pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+
+      // Add a clickable link for the QR/Button section if available
+      const verifyElement = document.getElementById('pdf-verify-link');
+      if (verifyElement && this.certificate?.sspId) {
+        // Get coordinates relative to the certificate container
+        const containerRect = element.getBoundingClientRect();
+        const verifyRect = verifyElement.getBoundingClientRect();
+        
+        // Calculate percentages
+        const xPercent = (verifyRect.left - containerRect.left) / elementWidth;
+        const yPercent = (verifyRect.top - containerRect.top) / elementHeight;
+        const wPercent = verifyRect.width / elementWidth;
+        const hPercent = verifyRect.height / elementHeight;
+        
+        // Convert to PDF coordinates
+        const pdfX = xPercent * pdfWidth;
+        const pdfY = yPercent * pdfHeight;
+        const pdfW = wPercent * pdfWidth;
+        const pdfH = hPercent * pdfHeight;
+        
+        const url = `https://knoz-certificate.vercel.app/certificates/Verification/${this.certificate.sspId}`;
+        pdf.link(pdfX, pdfY, pdfW, pdfH, { url: url });
+      }
+
       pdf.save(`${this.certificate?.studentName ?? 'certificate'}.pdf`);
     } catch (error) {
       console.error('Error downloading certificate:', error);

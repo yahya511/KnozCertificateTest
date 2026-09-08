@@ -1,4 +1,5 @@
 export interface ExpiredCourse {
+  sspId: number;
   endDate: string;
   studentName: string;
   studentOrParentPhone: string;

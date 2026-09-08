@@ -89,7 +89,7 @@
       </div>
       
       <!-- QR CODE -->
-      <div class="certificate-qr flex items-center justify-center self-center">
+      <div id="pdf-verify-link" class="certificate-qr flex flex-col items-center justify-center self-center gap-1.5 sm:gap-2">
         <div class="rounded-md bg-white p-1 shadow-lg">
           @if (qrCodeUrl()) {
             <img [src]="qrCodeUrl()" alt="Certificate QR Code" class="block h-10 w-10 object-contain sm:h-14 sm:w-14 lg:h-20 lg:w-20" />
@@ -97,6 +97,11 @@
             <div class="block h-10 w-10 sm:h-14 sm:w-14 lg:h-20 lg:w-20 bg-gray-100"></div>
           }
         </div>
+        @if (certificate().sspId) {
+          <a [href]="'/certificates/Verification/' + certificate().sspId" target="_blank" class="flex items-center justify-center gap-1 rounded-full bg-knoz-gold px-3 py-0.5 sm:py-1 text-[7px] sm:text-[9px] text-knoz-green hover:bg-[#d4b367] transition-colors lg:text-xs font-bold shadow-sm font-['Tajawal'] border border-white/20">
+            <i class="fa-solid fa-shield-halved"></i> {{ texts()['verifyCertificate'] }}
+          </a>
+        }
       </div>
       
       <!-- SIGNATURE -->

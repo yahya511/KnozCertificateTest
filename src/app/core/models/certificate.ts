@@ -1,5 +1,6 @@
 export interface Certificate {
     id: string;
+    sspId?: number;
     studentName: string;
     courseName: string;
     issueDate: string;

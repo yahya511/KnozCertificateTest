@@ -167,6 +167,7 @@ export const DICTIONARY = {
 
   courseName: 'اسم الدورة',
   quranCourse: 'القرآن الكريم',
+  verifyCertificate: 'التحقق',
   },
 
   en: {
@@ -341,6 +342,7 @@ export const DICTIONARY = {
 
   courseName: 'Course Name',
   quranCourse: 'Holy Quran',
+  verifyCertificate: 'Verify',
 
   },
 

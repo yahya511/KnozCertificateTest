@@ -1,0 +1,109 @@
+<div dir="rtl" class="min-h-screen bg-knoz-cream font-['Tajawal'] text-knoz-text p-4 md:p-8 flex items-center justify-center relative">
+    
+    <!-- Pattern Background -->
+    <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('/assets/pattern.png'); background-repeat: repeat;"></div>
+  
+    <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden relative z-10 border border-knoz-gold/30">
+      
+      <!-- Header -->
+      <div class="bg-knoz-green p-6 text-center text-white relative">
+        <div class="absolute top-0 left-0 w-full h-1 bg-knoz-gold"></div>
+        <img src="/assets/logo.jpeg" alt="Knoz Academy" class="w-20 h-20 mx-auto rounded-full border-2 border-knoz-gold shadow-md bg-white object-contain mb-4">
+        <h1 class="text-2xl font-bold font-['Amiri'] mb-1">التحقق من الشهادة</h1>
+        <p class="text-white/80 text-sm">أكاديمية كنوز لتعليم القرآن الكريم واللغة العربية</p>
+      </div>
+  
+      <div class="p-6 md:p-8">
+        
+        <!-- Error State -->
+        <div *ngIf="hasError()" class="text-center py-8">
+          <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fa-solid fa-triangle-exclamation text-3xl"></i>
+          </div>
+          <h2 class="text-xl font-bold text-red-700 mb-2">تعذر التحقق</h2>
+          <p class="text-knoz-muted">{{ errorMessage() }}</p>
+        </div>
+  
+        <!-- Success State -->
+        <div *ngIf="courseData() && !hasError()" class="space-y-8">
+          
+          <div class="text-center space-y-4 font-['Amiri']">
+            <div class="w-16 h-16 bg-green-100 text-knoz-green rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fa-solid fa-check-circle text-3xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-knoz-green">شهادة موثقة</h2>
+            <p class="text-lg leading-relaxed text-gray-700">
+                تشهد <strong>أكاديمية كنوز</strong> أن الطالب/ـة <br>
+                <span class="text-knoz-green font-bold text-xl block my-1">{{ courseData()?.course?.studentName || 'صاحب الشهادة' }}</span>
+                قد أتم بنجاح كورس <br>
+                <span class="text-knoz-gold font-bold text-xl block mt-2">{{ courseData()?.course?.planName }}</span>
+            </p>
+          </div>
+  
+          <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 space-y-4">
+            <h3 class="font-bold text-lg border-b pb-2 mb-3 text-knoz-green flex items-center gap-2">
+                <i class="fa-solid fa-circle-info text-knoz-gold text-sm"></i>
+                تفاصيل الكورس
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex flex-col">
+                <span class="text-sm text-knoz-muted mb-1">المادة</span>
+                <span class="font-medium text-gray-900">{{ courseData()?.course?.subjectName }}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm text-knoz-muted mb-1">المعلم</span>
+                <span class="font-medium text-gray-900">{{ courseData()?.course?.teacherName }}</span>
+              </div>
+              
+              <div class="flex flex-col">
+                <span class="text-sm text-knoz-muted mb-1">عدد الحصص</span>
+                <span class="font-medium text-gray-900">{{ courseData()?.course?.sessionsCount }} حصص</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm text-knoz-muted mb-1">مدة الحصة</span>
+                <span class="font-medium text-gray-900">{{ courseData()?.course?.duration }} دقيقة</span>
+              </div>
+  
+              <div class="flex flex-col">
+                <span class="text-sm text-knoz-muted mb-1">تاريخ بداية الكورس</span>
+                <span class="font-medium text-gray-900 dir-ltr text-right">{{ firstSessionDate() | date:'yyyy/MM/dd' }}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm text-knoz-muted mb-1">تاريخ نهاية الكورس</span>
+                <span class="font-medium text-gray-900 dir-ltr text-right">{{ lastSessionDate() | date:'yyyy/MM/dd' }}</span>
+              </div>
+  
+              <div class="flex flex-col md:col-span-2">
+                <span class="text-sm text-knoz-muted mb-1">مواعيد الحصص</span>
+                <div class="flex flex-wrap gap-2 mt-1">
+                  <span *ngFor="let pattern of courseData()?.course?.coursePattern" class="bg-white border border-knoz-gold/30 text-knoz-green px-3 py-1 rounded-full text-sm font-medium shadow-sm">
+                    {{ daysMap[pattern.dayOfWeek] }} - {{ formatTime(pattern.time) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Footer info -->
+          <div class="text-center pt-4 border-t border-gray-100 flex items-center justify-between">
+             <div class="text-right">
+                <p class="text-xs text-knoz-muted mb-1">إشراف</p>
+                <p class="text-sm font-bold text-gray-700">{{ courseData()?.course?.monitorName }}</p>
+             </div>
+             
+             <!-- Fake seal/stamp -->
+             <div class="w-16 h-16 opacity-80 mix-blend-multiply">
+                <div class="w-full h-full rounded-full border-2 border-knoz-gold text-knoz-gold flex items-center justify-center p-1 relative">
+                   <div class="w-full h-full rounded-full border border-knoz-gold border-dashed flex items-center justify-center flex-col text-[8px] font-bold text-center uppercase tracking-tighter leading-tight rotate-[-15deg]">
+                      <span>Knoz</span>
+                      <span>Verified</span>
+                   </div>
+                </div>
+             </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
