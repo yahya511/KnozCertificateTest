@@ -1,109 +1,180 @@
-<div dir="rtl" class="min-h-screen bg-knoz-cream font-['Tajawal'] text-knoz-text p-4 md:p-8 flex items-center justify-center relative">
+<div [attr.dir]="pageDirection" class="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 font-['Tajawal'] text-knoz-text p-4 md:p-8 flex items-center justify-center relative overflow-hidden">
+  
+  <!-- Background Ambient Elements -->
+  <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: url('/assets/pattern.png'); background-repeat: repeat;"></div>
+  <div class="absolute top-0 end-0 w-[500px] h-[500px] rounded-full bg-knoz-gold/10 blur-[100px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+  <div class="absolute bottom-0 start-0 w-[500px] h-[500px] rounded-full bg-knoz-green/5 blur-[100px] pointer-events-none -translate-x-1/3 translate-y-1/3"></div>
+
+  <!-- Language Toggle Button -->
+  <div class="absolute top-4 end-4 md:top-8 md:end-8 z-50">
+    <button (click)="toggleLanguage()" class="flex items-center gap-2 bg-white/90 backdrop-blur-md border border-knoz-gold/30 text-knoz-green px-5 py-2.5 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 font-bold text-sm">
+      <i class="fa-solid fa-globe"></i>
+      <span>{{ currentLanguage === 'ar' ? 'English' : 'عربي' }}</span>
+    </button>
+  </div>
+
+  <!-- Main Container -->
+  <div class="w-full max-w-5xl bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden relative z-10 border border-white flex flex-col md:flex-row">
     
-    <!-- Pattern Background -->
-    <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('/assets/pattern.png'); background-repeat: repeat;"></div>
-  
-    <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden relative z-10 border border-knoz-gold/30">
-      
-      <!-- Header -->
-      <div class="bg-knoz-green p-6 text-center text-white relative">
-        <div class="absolute top-0 left-0 w-full h-1 bg-knoz-gold"></div>
-        <img src="/assets/logo.jpeg" alt="Knoz Academy" class="w-20 h-20 mx-auto rounded-full border-2 border-knoz-gold shadow-md bg-white object-contain mb-4">
-        <h1 class="text-2xl font-bold font-['Amiri'] mb-1">التحقق من الشهادة</h1>
-        <p class="text-white/80 text-sm">أكاديمية كنوز لتعليم القرآن الكريم واللغة العربية</p>
-      </div>
-  
-      <div class="p-6 md:p-8">
-        
-        <!-- Error State -->
-        <div *ngIf="hasError()" class="text-center py-8">
-          <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fa-solid fa-triangle-exclamation text-3xl"></i>
-          </div>
-          <h2 class="text-xl font-bold text-red-700 mb-2">تعذر التحقق</h2>
-          <p class="text-knoz-muted">{{ errorMessage() }}</p>
+    <!-- Error State (Full Width) -->
+    <div *ngIf="hasError()" class="w-full p-12 text-center flex flex-col items-center justify-center min-h-[400px]">
+      <div class="relative w-28 h-28 mx-auto mb-8">
+        <div class="absolute inset-0 bg-red-100 rounded-full animate-ping opacity-50"></div>
+        <div class="relative w-full h-full bg-red-50 text-red-500 border-4 border-white rounded-full flex items-center justify-center shadow-xl">
+          <i class="fa-solid fa-triangle-exclamation text-5xl"></i>
         </div>
-  
-        <!-- Success State -->
-        <div *ngIf="courseData() && !hasError()" class="space-y-8">
+      </div>
+      <h2 class="text-3xl font-bold text-red-700 mb-4">{{ texts['verificationErrorTitle'] }}</h2>
+      <p class="text-knoz-muted text-xl">{{ errorMessageKey() ? texts[errorMessageKey()] : '' }}</p>
+    </div>
+
+    <!-- Success State -->
+    <ng-container *ngIf="courseData() && !hasError()">
+      
+      <!-- Side Panel (Hero / Identity) -->
+      <div class="md:w-[45%] bg-gradient-to-b from-knoz-green to-[#0a4a35] p-10 md:p-12 flex flex-col items-center justify-center text-center relative overflow-hidden text-white shrink-0">
+        <!-- Decorative subtle pattern inside side panel -->
+        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0l30 30-30 30L0 30z\' fill=\'%23ffffff\' fill-rule=\'evenodd\'/%3E%3C/svg%3E'); background-size: 40px 40px; background-position: center;"></div>
+        <div class="absolute top-0 start-0 w-full h-1.5 bg-gradient-to-r from-knoz-gold via-yellow-200 to-knoz-gold z-20"></div>
+        
+        <div class="relative z-10 w-full flex flex-col items-center">
           
-          <div class="text-center space-y-4 font-['Amiri']">
-            <div class="w-16 h-16 bg-green-100 text-knoz-green rounded-full flex items-center justify-center mx-auto mb-2">
-              <i class="fa-solid fa-check-circle text-3xl"></i>
-            </div>
-            <h2 class="text-3xl font-bold text-knoz-green">شهادة موثقة</h2>
-            <p class="text-lg leading-relaxed text-gray-700">
-                تشهد <strong>أكاديمية كنوز</strong> أن الطالب/ـة <br>
-                <span class="text-knoz-green font-bold text-xl block my-1">{{ courseData()?.course?.studentName || 'صاحب الشهادة' }}</span>
-                قد أتم بنجاح كورس <br>
-                <span class="text-knoz-gold font-bold text-xl block mt-2">{{ courseData()?.course?.planName }}</span>
-            </p>
+          <!-- Academy Logo -->
+          <div class="w-24 h-24 bg-white rounded-2xl p-2 mx-auto shadow-2xl mb-10 border border-white/20 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+            <img src="/assets/logo.jpeg" class="w-full h-full object-contain rounded-xl" alt="Knoz Academy" />
           </div>
-  
-          <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 space-y-4">
-            <h3 class="font-bold text-lg border-b pb-2 mb-3 text-knoz-green flex items-center gap-2">
-                <i class="fa-solid fa-circle-info text-knoz-gold text-sm"></i>
-                تفاصيل الكورس
-            </h3>
+
+          <!-- Elaborate Pulsing Verification Badge -->
+          <div class="relative w-36 h-36 mx-auto mb-10">
+            <!-- Pulsing outer glow -->
+            <div class="absolute inset-0 bg-knoz-gold rounded-full animate-ping opacity-40 duration-[3000ms]"></div>
+            <div class="absolute inset-2 bg-yellow-400 rounded-full animate-pulse opacity-20"></div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Main Badge Container -->
+            <div class="relative w-full h-full bg-gradient-to-br from-knoz-gold to-yellow-600 rounded-full flex items-center justify-center border-4 border-white/20 shadow-[0_0_30px_rgba(200,165,89,0.5)] overflow-hidden">
+              <!-- Background starburst/certificate icon -->
+              <i class="fa-solid fa-certificate text-8xl text-yellow-300 opacity-30 absolute scale-125 animate-[spin_10s_linear_infinite]"></i>
+              <!-- Foreground official checkmark -->
+              <i class="fa-solid fa-check text-6xl text-white relative z-10 drop-shadow-lg"></i>
+            </div>
+            
+            <!-- Floating Shield Icon -->
+            <div class="absolute -bottom-2 -end-2 bg-white text-knoz-green w-12 h-12 rounded-full flex items-center justify-center border-2 border-knoz-gold shadow-xl z-20">
+              <i class="fa-solid fa-shield-halved text-xl"></i>
+            </div>
+          </div>
+
+          <h2 class="text-3xl lg:text-4xl font-bold font-['Amiri'] mb-3 tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-white to-knoz-gold/90">{{ texts['verifiedSuccessTitle'] }}</h2>
+          <p class="text-knoz-gold/90 text-sm lg:text-base mb-10 font-medium">{{ texts['verificationSubtitle'] }}</p>
+
+          <!-- Certified Person Details -->
+          <div class="w-full bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-inner">
+            <p class="text-sm text-white/70 mb-2">{{ texts['verifiedCertifies'] }}</p>
+            <h3 class="text-2xl lg:text-3xl font-bold text-white mb-3 font-['Amiri']">{{ courseData()?.course?.studentName || texts['certificateOwner'] }}</h3>
+            <div class="w-16 h-px bg-knoz-gold/50 mx-auto my-4"></div>
+            <p class="text-sm text-white/70">{{ texts['verifiedCompleted'] }}</p>
+            <p class="text-xl font-bold text-knoz-gold mt-2 font-['Amiri']">{{ courseData()?.course?.planName }}</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Main Content Panel (Course Details) -->
+      <div class="md:w-[55%] p-8 md:p-12 lg:p-16 bg-white flex flex-col justify-center relative">
+        
+        <!-- Decorative watermark in background -->
+        <i class="fa-solid fa-shield-check absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] text-slate-50 opacity-50 pointer-events-none"></i>
+
+        <div class="relative z-10 w-full">
+          <h3 class="font-bold text-2xl lg:text-3xl border-b border-gray-100 pb-5 mb-8 text-knoz-green flex items-center gap-4 font-['Amiri']">
+            <span class="bg-knoz-cream text-knoz-gold p-3 rounded-2xl shadow-sm"><i class="fa-solid fa-file-signature"></i></span>
+            {{ texts['courseDetailsTitle'] }}
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
+            <div class="flex items-start gap-4">
+              <div class="mt-1 text-knoz-gold/80 text-xl"><i class="fa-solid fa-book-open"></i></div>
               <div class="flex flex-col">
-                <span class="text-sm text-knoz-muted mb-1">المادة</span>
-                <span class="font-medium text-gray-900">{{ courseData()?.course?.subjectName }}</span>
+                <span class="text-sm text-knoz-muted mb-1">{{ texts['subjectLabel'] }}</span>
+                <span class="font-bold text-gray-900 text-lg">{{ courseData()?.course?.subjectName }}</span>
               </div>
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="mt-1 text-knoz-gold/80 text-xl"><i class="fa-solid fa-chalkboard-user"></i></div>
               <div class="flex flex-col">
-                <span class="text-sm text-knoz-muted mb-1">المعلم</span>
-                <span class="font-medium text-gray-900">{{ courseData()?.course?.teacherName }}</span>
+                <span class="text-sm text-knoz-muted mb-1">{{ texts['teacherLabel'] }}</span>
+                <span class="font-bold text-gray-900 text-lg">{{ courseData()?.course?.teacherName }}</span>
               </div>
-              
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="mt-1 text-knoz-gold/80 text-xl"><i class="fa-solid fa-calendar-check"></i></div>
               <div class="flex flex-col">
-                <span class="text-sm text-knoz-muted mb-1">عدد الحصص</span>
-                <span class="font-medium text-gray-900">{{ courseData()?.course?.sessionsCount }} حصص</span>
+                <span class="text-sm text-knoz-muted mb-1">{{ texts['sessionsCountLabel'] }}</span>
+                <span class="font-bold text-gray-900 text-lg">{{ courseData()?.course?.sessionsCount }} <span class="text-sm font-normal text-gray-500">{{ texts['sessionsUnit'] }}</span></span>
               </div>
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="mt-1 text-knoz-gold/80 text-xl"><i class="fa-solid fa-clock"></i></div>
               <div class="flex flex-col">
-                <span class="text-sm text-knoz-muted mb-1">مدة الحصة</span>
-                <span class="font-medium text-gray-900">{{ courseData()?.course?.duration }} دقيقة</span>
+                <span class="text-sm text-knoz-muted mb-1">{{ texts['durationLabel'] }}</span>
+                <span class="font-bold text-gray-900 text-lg">{{ courseData()?.course?.duration }} <span class="text-sm font-normal text-gray-500">{{ texts['minutesUnit'] }}</span></span>
               </div>
-  
-              <div class="flex flex-col">
-                <span class="text-sm text-knoz-muted mb-1">تاريخ بداية الكورس</span>
-                <span class="font-medium text-gray-900 dir-ltr text-right">{{ firstSessionDate() | date:'yyyy/MM/dd' }}</span>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="mt-1 text-knoz-gold/80 text-xl"><i class="fa-solid fa-hourglass-start"></i></div>
+              <div class="flex flex-col w-full">
+                <span class="text-sm text-knoz-muted mb-1">{{ texts['startDateLabel'] }}</span>
+                <span class="font-bold text-gray-900 text-lg" [ngClass]="currentLanguage === 'ar' ? 'text-right dir-ltr' : 'text-left dir-ltr'">{{ firstSessionDate() | date:'yyyy/MM/dd' }}</span>
               </div>
-              <div class="flex flex-col">
-                <span class="text-sm text-knoz-muted mb-1">تاريخ نهاية الكورس</span>
-                <span class="font-medium text-gray-900 dir-ltr text-right">{{ lastSessionDate() | date:'yyyy/MM/dd' }}</span>
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="mt-1 text-knoz-gold/80 text-xl"><i class="fa-solid fa-hourglass-end"></i></div>
+              <div class="flex flex-col w-full">
+                <span class="text-sm text-knoz-muted mb-1">{{ texts['endDateLabel'] }}</span>
+                <span class="font-bold text-gray-900 text-lg" [ngClass]="currentLanguage === 'ar' ? 'text-right dir-ltr' : 'text-left dir-ltr'">{{ lastSessionDate() | date:'yyyy/MM/dd' }}</span>
               </div>
-  
-              <div class="flex flex-col md:col-span-2">
-                <span class="text-sm text-knoz-muted mb-1">مواعيد الحصص</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span *ngFor="let pattern of courseData()?.course?.coursePattern" class="bg-white border border-knoz-gold/30 text-knoz-green px-3 py-1 rounded-full text-sm font-medium shadow-sm">
-                    {{ daysMap[pattern.dayOfWeek] }} - {{ formatTime(pattern.time) }}
-                  </span>
-                </div>
+            </div>
+
+            <div class="flex flex-col md:col-span-2 pt-4 border-t border-gray-50">
+              <span class="text-sm text-knoz-muted mb-4 flex items-center gap-2"><i class="fa-solid fa-calendar-days text-knoz-gold/80"></i> {{ texts['scheduleLabel'] }}</span>
+              <div class="flex flex-wrap gap-3">
+                <span *ngFor="let pattern of courseData()?.course?.coursePattern" class="bg-slate-50 border border-slate-200 text-knoz-green px-5 py-2 rounded-2xl text-sm font-bold shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
+                  {{ daysMap[pattern.dayOfWeek] }} <span class="text-knoz-gold mx-1">•</span> <span class="dir-ltr inline-block">{{ formatTime(pattern.time) }}</span>
+                </span>
               </div>
             </div>
           </div>
-  
-          <!-- Footer info -->
-          <div class="text-center pt-4 border-t border-gray-100 flex items-center justify-between">
-             <div class="text-right">
-                <p class="text-xs text-knoz-muted mb-1">إشراف</p>
-                <p class="text-sm font-bold text-gray-700">{{ courseData()?.course?.monitorName }}</p>
+
+          <!-- Footer info & Seal -->
+          <div class="mt-10 pt-8 border-t border-gray-100 flex items-center justify-between">
+             <div class="flex items-center gap-4">
+               <div class="w-12 h-12 bg-knoz-cream rounded-full flex items-center justify-center text-knoz-gold text-lg shadow-inner">
+                  <i class="fa-solid fa-user-tie"></i>
+               </div>
+               <div>
+                  <p class="text-xs text-knoz-muted mb-1 uppercase tracking-wider">{{ texts['supervisorLabel'] }}</p>
+                  <p class="text-base font-bold text-gray-800">{{ courseData()?.course?.monitorName }}</p>
+               </div>
              </div>
              
-             <!-- Fake seal/stamp -->
-             <div class="w-16 h-16 opacity-80 mix-blend-multiply">
-                <div class="w-full h-full rounded-full border-2 border-knoz-gold text-knoz-gold flex items-center justify-center p-1 relative">
-                   <div class="w-full h-full rounded-full border border-knoz-gold border-dashed flex items-center justify-center flex-col text-[8px] font-bold text-center uppercase tracking-tighter leading-tight rotate-[-15deg]">
-                      <span>Knoz</span>
-                      <span>Verified</span>
+             <!-- Authentic Official Seal -->
+             <div class="relative w-24 h-24 opacity-90 drop-shadow-sm hover:scale-105 transition-transform duration-500">
+                <div class="w-full h-full rounded-full border-[3px] border-knoz-gold/80 text-knoz-gold bg-white flex items-center justify-center p-1.5 relative">
+                   <div class="w-full h-full rounded-full border-[1.5px] border-knoz-gold/60 border-dashed flex items-center justify-center flex-col text-[10px] font-bold text-center uppercase tracking-widest leading-tight rotate-[-15deg] bg-knoz-cream/20">
+                      <span class="text-knoz-green">{{ texts['verifiedBadge'].split(' ')[0] }}</span>
+                      <span class="text-knoz-gold mt-1">{{ texts['verifiedBadge'].split(' ').slice(1).join(' ') || texts['verifiedBadge'] }}</span>
                    </div>
                 </div>
              </div>
           </div>
-  
         </div>
       </div>
-    </div>
+    </ng-container>
+
   </div>
+</div>

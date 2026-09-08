@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { VerificationService, VerificationData } from '../../core/services/verification.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { LanguageService } from '../../core/services/language-service';
+import { DICTIONARY } from '../../core/mock/dictionary';
 
 @Component({
   selector: 'app-certificate-verification',
@@ -15,10 +17,28 @@ export class CertificateVerificationComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly verificationService = inject(VerificationService);
   private readonly spinner = inject(NgxSpinnerService);
+  private readonly languageService = inject(LanguageService);
 
   courseData = signal<VerificationData['record'] | null>(null);
   hasError = signal<boolean>(false);
-  errorMessage = signal<string>('');
+  errorMessageKey = signal<'verificationInvalidLink' | 'verificationNotFound' | 'verificationServerError' | ''>('');
+
+  get currentLanguage(): 'en' | 'ar' {
+    return this.languageService.currentLanguage();
+  }
+
+  get texts(): { [key: string]: string } {
+    return DICTIONARY[this.currentLanguage];
+  }
+
+  get pageDirection(): 'rtl' | 'ltr' {
+    return this.currentLanguage === 'ar' ? 'rtl' : 'ltr';
+  }
+
+  toggleLanguage(): void {
+    const newLang = this.currentLanguage === 'ar' ? 'en' : 'ar';
+    this.languageService.setLanguage(newLang);
+  }
 
   // Computed properties for specific requirements
   firstSessionDate = computed(() => {
@@ -43,21 +63,20 @@ export class CertificateVerificationComponent implements OnInit {
     return sorted[0].sessionDate;
   });
 
-  daysMap: Record<number, string> = {
-    0: 'الأحد',
-    1: 'الإثنين',
-    2: 'الثلاثاء',
-    3: 'الأربعاء',
-    4: 'الخميس',
-    5: 'الجمعة',
-    6: 'السبت'
-  };
+  get daysMap(): Record<number, string> {
+    if (this.currentLanguage === 'ar') {
+      return { 0: 'الأحد', 1: 'الإثنين', 2: 'الثلاثاء', 3: 'الأربعاء', 4: 'الخميس', 5: 'الجمعة', 6: 'السبت' };
+    } else {
+      return { 0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat' };
+    }
+  }
 
   formatTime(timeString: string): string {
     if (!timeString) return '';
     const [hours, minutes] = timeString.split(':');
     let h = parseInt(hours, 10);
-    const ampm = h >= 12 ? 'م' : 'ص';
+    const isAr = this.currentLanguage === 'ar';
+    const ampm = h >= 12 ? (isAr ? 'م' : 'PM') : (isAr ? 'ص' : 'AM');
     h = h % 12;
     h = h ? h : 12; 
     return `${h}:${minutes} ${ampm}`;
@@ -70,7 +89,7 @@ export class CertificateVerificationComponent implements OnInit {
       this.verifyCertificate(sspId);
     } else {
       this.hasError.set(true);
-      this.errorMessage.set('رابط التحقق غير صحيح، يرجى مسح رمز الـ QR مرة أخرى.');
+      this.errorMessageKey.set('verificationInvalidLink');
     }
   }
 
@@ -85,13 +104,13 @@ export class CertificateVerificationComponent implements OnInit {
           this.courseData.set(res.record);
         } else {
           this.hasError.set(true);
-          this.errorMessage.set('لم نتمكن من العثور على بيانات هذه الشهادة.');
+          this.errorMessageKey.set('verificationNotFound');
         }
       },
       error: (err) => {
         this.spinner.hide();
         this.hasError.set(true);
-        this.errorMessage.set('حدث خطأ أثناء الاتصال بالخادم، يرجى المحاولة لاحقاً.');
+        this.errorMessageKey.set('verificationServerError');
         console.error('Verification Error:', err);
       }
     });
