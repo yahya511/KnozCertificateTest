@@ -121,7 +121,9 @@ export class CertificatePreview implements OnInit {
         const pdfW = wPercent * pdfWidth;
         const pdfH = hPercent * pdfHeight;
         
-        const url = `https://knoz-certificate.vercel.app/certificates/Verification/${this.certificate.sspId}`;
+       //const url = `https://knoz-certificate.vercel.app/certificates/Verification/${this.certificate.sspId}`;
+       const url = `https://knozcertificate.ai.studio/certificates/Verification/${this.certificate.sspId}`;
+
         pdf.link(pdfX, pdfY, pdfW, pdfH, { url: url });
       }
 
