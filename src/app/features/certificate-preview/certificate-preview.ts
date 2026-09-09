@@ -39,7 +39,9 @@ export class CertificatePreview implements OnInit {
 
   ngOnInit(): void {
     if (this.certificate?.id) {
-      const qrData = this.certificate.sspId ? `https://knoz-certificate.vercel.app/certificates/Verification/${this.certificate.sspId}` : this.certificate.id;
+     // const qrData = this.certificate.sspId ? `https://knoz-certificate.vercel.app/certificates/Verification/${this.certificate.sspId}` : this.certificate.id;
+     const qrData = this.certificate.sspId ? `https://knozcertificate.ai.studio/certificates/Verification/${this.certificate.sspId}` : this.certificate.id;
+
       this.generateQrCode(qrData);
     }
   }
