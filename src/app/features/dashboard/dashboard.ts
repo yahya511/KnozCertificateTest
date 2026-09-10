@@ -28,6 +28,18 @@ readonly dictionary = DICTIONARY;
 
   certificates: Certificate[] = [];
 
+  get totalCertificates(): number {
+    return this.certificates.length;
+  }
+
+  get totalCourses(): number {
+    return new Set(this.certificates.map(c => c.courseName)).size;
+  }
+
+  get totalStudents(): number {
+    return new Set(this.certificates.map(c => c.studentName)).size;
+  }
+
   ngOnInit(): void {
     this.loadingService.show()
     this.certificates =

@@ -38,6 +38,36 @@
     </div>
   </div>
 
+  <!-- Statistics Card -->
+  <div class="mb-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-s-4 border-knoz-gold">
+    <div class="flex items-center gap-4">
+      <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600">
+        <i class="fa-solid fa-clock-rotate-left text-2xl"></i>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">{{ direction === 'rtl' ? 'إجمالي الكورسات المنتهية' : 'Total Expired Courses' }}</p>
+        <div class="mt-1 flex items-baseline gap-2">
+          <span class="text-3xl font-extrabold text-knoz-green">{{ totalCount() }}</span>
+          <span class="text-sm font-medium text-gray-400">{{ direction === 'rtl' ? 'طالب' : 'student(s)' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional info like average overdue or total teachers could go here -->
+    <div class="flex items-center gap-4 border-t border-gray-100 pt-4 sm:border-t-0 sm:border-s sm:pt-0 sm:ps-6">
+      <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-orange-50 text-orange-600">
+        <i class="fa-solid fa-circle-exclamation text-2xl"></i>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">{{ direction === 'rtl' ? 'قيد الانتظار للتجديد' : 'Pending Renewal' }}</p>
+        <div class="mt-1 flex items-baseline gap-2">
+          <span class="text-3xl font-extrabold text-knoz-green">{{ courses().length }}</span>
+          <span class="text-sm font-medium text-gray-400">{{ direction === 'rtl' ? 'حاليًا بالصفحة' : 'on current page' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Table Container -->
   <div class="relative overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-knoz-gold/20">
     

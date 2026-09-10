@@ -6,7 +6,7 @@
     <!-- Header -->
     <div class="mb-8 flex items-center justify-between">
       <div>
-        <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-serif">
+        <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-['Tajawal']">
           {{ getPageText('settingsTitle') }}
         </h1>
         <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
@@ -36,7 +36,7 @@
             <!-- Section: General Settings -->
             <div>
               <h2 class="text-base font-semibold leading-7 text-slate-900 dark:text-white flex items-center gap-2">
-                <i class="fas fa-sliders text-indigo-500"></i>
+                <i class="fas fa-sliders text-knoz-green/90"></i>
                 {{ getPageText('generalSettings') }}
               </h2>
               
@@ -49,26 +49,26 @@
                   </label>
                   <div class="mt-2 flex gap-4">
                     <label class="relative flex cursor-pointer rounded-lg border bg-white dark:bg-slate-900 p-4 shadow-sm focus:outline-none"
-                           [ngClass]="settingsForm.get('language')?.value === 'ar' ? 'border-indigo-500 ring-1 ring-indigo-500' : 'border-slate-300 dark:border-slate-700'">
+                           [ngClass]="settingsForm.get('language')?.value === 'ar' ? 'border-knoz-green/90 ring-1 ring-knoz-green/90' : 'border-slate-300 dark:border-slate-700'">
                       <input type="radio" formControlName="language" value="ar" class="sr-only">
                       <span class="flex flex-1">
                         <span class="flex flex-col">
                           <span class="block text-sm font-medium text-slate-900 dark:text-white">العربية</span>
                         </span>
                       </span>
-                      <i class="fas fa-check-circle text-indigo-600 dark:text-indigo-400 mt-0.5 h-5 w-5 ml-3"
+                      <i class="fas fa-check-circle text-knoz-green dark:text-knoz-green/70 mt-0.5 h-5 w-5 ml-3"
                          [class.invisible]="settingsForm.get('language')?.value !== 'ar'"></i>
                     </label>
 
                     <label class="relative flex cursor-pointer rounded-lg border bg-white dark:bg-slate-900 p-4 shadow-sm focus:outline-none"
-                           [ngClass]="settingsForm.get('language')?.value === 'en' ? 'border-indigo-500 ring-1 ring-indigo-500' : 'border-slate-300 dark:border-slate-700'">
+                           [ngClass]="settingsForm.get('language')?.value === 'en' ? 'border-knoz-green/90 ring-1 ring-knoz-green/90' : 'border-slate-300 dark:border-slate-700'">
                       <input type="radio" formControlName="language" value="en" class="sr-only">
                       <span class="flex flex-1">
                         <span class="flex flex-col">
                           <span class="block text-sm font-medium text-slate-900 dark:text-white">English</span>
                         </span>
                       </span>
-                      <i class="fas fa-check-circle text-indigo-600 dark:text-indigo-400 mt-0.5 h-5 w-5 mr-3"
+                      <i class="fas fa-check-circle text-knoz-green dark:text-knoz-green/70 mt-0.5 h-5 w-5 mr-3"
                          [class.invisible]="settingsForm.get('language')?.value !== 'en'"></i>
                     </label>
                   </div>
@@ -83,7 +83,7 @@
                     <input
                       type="text"
                       formControlName="defaultSignerName"
-                      class="block w-full rounded-md border-0 py-2.5 px-3.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-slate-900 dark:text-white dark:ring-slate-700 dark:focus:ring-indigo-500"
+                      class="block w-full rounded-md border-0 py-2.5 px-3.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-knoz-green sm:text-sm sm:leading-6 dark:bg-slate-900 dark:text-white dark:ring-slate-700 dark:focus:ring-knoz-green/90"
                       [placeholder]="getPageText('defaultSignerPlaceholder')"
                     />
                   </div>
@@ -95,7 +95,7 @@
             <!-- Section: Certificate Defaults -->
             <div>
               <h2 class="text-base font-semibold leading-7 text-slate-900 dark:text-white flex items-center gap-2">
-                <i class="fas fa-certificate text-amber-500"></i>
+                <i class="fas fa-certificate text-knoz-gold"></i>
                 {{ getPageText('defaultTemplate') }}
               </h2>
               <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
@@ -104,8 +104,8 @@
 
               <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 border-t border-slate-200 dark:border-slate-700 pt-6">
                 <!-- Classic Template -->
-                <label class="relative flex cursor-pointer rounded-lg border bg-white dark:bg-slate-900 p-4 shadow-sm focus:outline-none hover:border-indigo-300 transition-colors"
-                       [ngClass]="settingsForm.get('defaultTemplate')?.value === 'classic' ? 'border-indigo-500 ring-2 ring-indigo-500' : 'border-slate-300 dark:border-slate-700'">
+                <label class="relative flex cursor-pointer rounded-lg border bg-white dark:bg-slate-900 p-4 shadow-sm focus:outline-none hover:border-knoz-green/50 transition-colors"
+                       [ngClass]="settingsForm.get('defaultTemplate')?.value === 'classic' ? 'border-knoz-green/90 ring-2 ring-knoz-green/90' : 'border-slate-300 dark:border-slate-700'">
                   <input type="radio" formControlName="defaultTemplate" value="classic" class="sr-only">
                   <div class="flex flex-col w-full text-center">
                     <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-3">
@@ -116,24 +116,24 @@
                 </label>
 
                 <!-- Elegant Template -->
-                <label class="relative flex cursor-pointer rounded-lg border bg-white dark:bg-slate-900 p-4 shadow-sm focus:outline-none hover:border-indigo-300 transition-colors"
-                       [ngClass]="settingsForm.get('defaultTemplate')?.value === 'elegant' ? 'border-indigo-500 ring-2 ring-indigo-500' : 'border-slate-300 dark:border-slate-700'">
+                <label class="relative flex cursor-pointer rounded-lg border bg-white dark:bg-slate-900 p-4 shadow-sm focus:outline-none hover:border-knoz-green/50 transition-colors"
+                       [ngClass]="settingsForm.get('defaultTemplate')?.value === 'elegant' ? 'border-knoz-green/90 ring-2 ring-knoz-green/90' : 'border-slate-300 dark:border-slate-700'">
                   <input type="radio" formControlName="defaultTemplate" value="elegant" class="sr-only">
                   <div class="flex flex-col w-full text-center">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center mb-3">
-                      <i class="fas fa-award text-indigo-500 dark:text-indigo-400 text-xl"></i>
+                    <div class="w-12 h-12 mx-auto rounded-full bg-knoz-green/5 dark:bg-indigo-900/30 flex items-center justify-center mb-3">
+                      <i class="fas fa-award text-knoz-green/90 dark:text-knoz-green/70 text-xl"></i>
                     </div>
                     <span class="block text-sm font-medium text-slate-900 dark:text-white">{{ getPageText('elegantTemplate') }}</span>
                   </div>
                 </label>
 
                 <!-- Quran Template -->
-                <label class="relative flex cursor-pointer rounded-lg border bg-white dark:bg-slate-900 p-4 shadow-sm focus:outline-none hover:border-indigo-300 transition-colors"
-                       [ngClass]="settingsForm.get('defaultTemplate')?.value === 'quran' ? 'border-indigo-500 ring-2 ring-indigo-500' : 'border-slate-300 dark:border-slate-700'">
+                <label class="relative flex cursor-pointer rounded-lg border bg-white dark:bg-slate-900 p-4 shadow-sm focus:outline-none hover:border-knoz-green/50 transition-colors"
+                       [ngClass]="settingsForm.get('defaultTemplate')?.value === 'quran' ? 'border-knoz-green/90 ring-2 ring-knoz-green/90' : 'border-slate-300 dark:border-slate-700'">
                   <input type="radio" formControlName="defaultTemplate" value="quran" class="sr-only">
                   <div class="flex flex-col w-full text-center">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center mb-3">
-                      <i class="fas fa-book-open text-emerald-600 dark:text-emerald-400 text-xl"></i>
+                    <div class="w-12 h-12 mx-auto rounded-full bg-knoz-green/5 dark:bg-emerald-900/30 flex items-center justify-center mb-3">
+                      <i class="fas fa-book-open text-knoz-green dark:text-knoz-green/70 text-xl"></i>
                     </div>
                     <span class="block text-sm font-medium text-slate-900 dark:text-white">{{ getPageText('quranTemplate') }}</span>
                   </div>
@@ -146,7 +146,7 @@
           <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 flex items-center justify-end gap-x-4">
             
             @if (showSuccess()) {
-            <div class="text-sm font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+            <div class="text-sm font-medium text-knoz-green dark:text-knoz-green/70 flex items-center gap-2">
               <i class="fas fa-check-circle"></i>
               {{ getPageText('settingsSaved') }}
             </div>
@@ -155,7 +155,7 @@
             <button
               type="submit"
               [disabled]="settingsForm.invalid"
-              class="rounded-md bg-indigo-600 px-8 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              class="rounded-md bg-knoz-green px-8 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-knoz-green/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-knoz-green disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               {{ getPageText('saveSettings') }}
             </button>
@@ -167,7 +167,7 @@
       <div class="lg:col-span-1">
         <div class="bg-white dark:bg-slate-800 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 rounded-2xl p-6">
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+            <div class="w-12 h-12 bg-knoz-green/10 dark:bg-indigo-900/50 rounded-full flex items-center justify-center text-knoz-green dark:text-knoz-green/70">
               <i class="fas fa-shield-alt text-xl"></i>
             </div>
             <div>
@@ -181,13 +181,13 @@
             </p>
             <ul class="text-xs text-slate-500 dark:text-slate-400 mt-4 space-y-2">
               <li class="flex items-center gap-2">
-                <i class="fas fa-check text-emerald-500"></i> Credentials hidden from browser
+                <i class="fas fa-check text-knoz-green/90"></i> Credentials hidden from browser
               </li>
               <li class="flex items-center gap-2">
-                <i class="fas fa-check text-emerald-500"></i> Verified API calls
+                <i class="fas fa-check text-knoz-green/90"></i> Verified API calls
               </li>
               <li class="flex items-center gap-2">
-                <i class="fas fa-check text-emerald-500"></i> Local storage persistence
+                <i class="fas fa-check text-knoz-green/90"></i> Local storage persistence
               </li>
             </ul>
           </div>
