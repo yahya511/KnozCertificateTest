@@ -38,6 +38,11 @@ export const routes: Routes = [
         loadComponent: () => import('./features/certificate-verification/certificate-verification').then(c => c.CertificateVerificationComponent)
     },
     {
+        path: 'settings',
+        loadComponent: () => import('./features/settings/settings').then(c => c.SettingsComponent),
+        canActivate: [authGuard]
+    },
+    {
         path: '**',
         redirectTo: 'login',
     },

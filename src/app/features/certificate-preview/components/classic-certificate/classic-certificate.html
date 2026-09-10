@@ -91,7 +91,10 @@
           <img src="/assets/Signature.png" alt="Academic Director Signature" class="certificate-signature max-h-7 w-auto object-contain sm:max-h-10 lg:max-h-14" />
         </div>
         <div class="mt-1 h-px w-20 bg-knoz-gold/50 sm:w-28 lg:mt-2 lg:w-36"></div>
-        <p class="mt-1 whitespace-nowrap text-[7px] font-medium text-gray-500 sm:text-[9px] lg:text-xs">
+        <p class="mt-1 whitespace-nowrap text-[8px] font-bold text-knoz-green sm:text-[10px] lg:text-sm">
+          {{ certificate().signerName }}
+        </p>
+        <p class="mt-0.5 whitespace-nowrap text-[7px] font-medium text-gray-500 sm:text-[9px] lg:text-xs">
           {{ texts()['academicDirector'] }}
         </p>
       </div>

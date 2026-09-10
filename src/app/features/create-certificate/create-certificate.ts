@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CertificateService } from '../../core/services/certificate-service';
 import { LanguageService } from '../../core/services/language-service';
+import { SettingsService } from '../../core/services/settings.service';
 import { DICTIONARY } from '../../core/mock/dictionary';
 import { Certificate } from '../../core/models/certificate';
 import {  NgClass } from '@angular/common';
@@ -19,13 +20,15 @@ export class CreateCertificate {
   private readonly router = inject(Router);
   private readonly certificateService = inject(CertificateService);
   private readonly languageService = inject(LanguageService);
-  selectedTemplate: 'classic' | 'elegant' | 'quran' = 'classic';
+  private readonly settingsService = inject(SettingsService);
+  
+  selectedTemplate: 'classic' | 'elegant' | 'quran' = this.settingsService.defaultTemplate;
   sspId?: number;
 
   certificateForm = this.fb.nonNullable.group({
     studentName: ['', [Validators.required, Validators.minLength(3)]],
     courseName: ['', [Validators.required, Validators.minLength(2)]],
-    language: ['en' as 'ar' | 'en'],
+    language: [this.languageService.currentLanguage() as 'ar' | 'en'],
     issueDate: ['']
   })
 
@@ -87,7 +90,7 @@ export class CreateCertificate {
       // template: 'default',
       templateId: this.selectedTemplate,
 
-      signerId: 'signer-001',
+      signerName: this.settingsService.defaultSignerName,
     };
 
     // Save in LocalStorage

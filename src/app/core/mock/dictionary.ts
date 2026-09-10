@@ -191,6 +191,19 @@ export const DICTIONARY = {
   scheduleLabel: 'مواعيد الحصص',
   supervisorLabel: 'إشراف',
   verifiedBadge: 'موثق من كنوز',
+  
+  // Settings
+  settingsTitle: 'إعدادات النظام',
+  settingsDescription: 'تخصيص لغة النظام وقوالب الشهادات الافتراضية واسم الموقع',
+  generalSettings: 'الإعدادات العامة',
+  systemLanguage: 'لغة النظام',
+  saveSettings: 'حفظ الإعدادات',
+  settingsSaved: 'تم حفظ الإعدادات بنجاح',
+  defaultTemplate: 'القالب الافتراضي',
+  defaultTemplateDescription: 'القالب الذي سيتم تحديده تلقائياً عند إنشاء شهادة جديدة',
+  defaultSigner: 'اسم المُوَقِّع الافتراضي',
+  defaultSignerPlaceholder: 'أدخل اسم المدير الأكاديمي',
+  
   },
 
   en: {
@@ -390,6 +403,17 @@ export const DICTIONARY = {
   supervisorLabel: 'Supervised by',
   verifiedBadge: 'Knoz Verified',
 
+  // Settings
+  settingsTitle: 'System Settings',
+  settingsDescription: 'Customize system language, default certificate templates, and signer name',
+  generalSettings: 'General Settings',
+  systemLanguage: 'System Language',
+  saveSettings: 'Save Settings',
+  settingsSaved: 'Settings saved successfully',
+  defaultTemplate: 'Default Template',
+  defaultTemplateDescription: 'The template that will be automatically selected when creating a new certificate',
+  defaultSigner: 'Default Signer Name',
+  defaultSignerPlaceholder: 'Enter the Academic Director name',
   },
 
 } as const;

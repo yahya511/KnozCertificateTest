@@ -17,6 +17,10 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": { "entry": "src/server.ts" },
+            "prerender": false,
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -56,6 +60,15 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": [
+              "localhost",
+              "localhost:3000",
+              "127.0.0.1",
+              "ais-dev-l7x6god7nbbkokt5olxiqc-779873913507.europe-west2.run.app",
+              "ais-pre-l7x6god7nbbkokt5olxiqc-779873913507.europe-west2.run.app"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "knoz-academy:build:production"

@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CertificateService } from '../../core/services/certificate-service';
 import { RouterLink } from "@angular/router";
 import { DatePipe, NgClass } from '@angular/common';
@@ -30,6 +31,8 @@ export class CertificatePreview implements OnInit {
   private readonly languageService = inject(LanguageService);
   private readonly loadingService = inject(LoadingService);
 
+  private readonly platformId = inject(PLATFORM_ID);
+
   certificate = this.certificateService.getCertificate();
   qrCodeUrl = signal<string>('');
 
@@ -38,7 +41,7 @@ export class CertificatePreview implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.certificate?.id) {
+    if (this.certificate?.id && isPlatformBrowser(this.platformId)) {
      // const qrData = this.certificate.sspId ? `https://knoz-certificate.vercel.app/certificates/Verification/${this.certificate.sspId}` : this.certificate.id;
      const qrData = this.certificate.sspId ? `https://knozcertificate.ai.studio/certificates/Verification/${this.certificate.sspId}` : this.certificate.id;
 
@@ -68,12 +71,15 @@ export class CertificatePreview implements OnInit {
   }
 
   printCertificate(): void {
-    setTimeout(() => {
-      window.print();
-    }, 150);
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        window.print();
+      }, 150);
+    }
   }
 
   async downloadCertificate(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) return;
     const element = document.getElementById('certificate-download-container');
     if (!element) return;
 
