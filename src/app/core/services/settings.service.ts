@@ -15,7 +15,7 @@ export class SettingsService {
 
   private readonly defaultSettings: AppSettings = {
     defaultTemplate: 'classic',
-    defaultSignerName: 'يحيى عبد الباسط' // Default Arabic signer
+    defaultSignerName: 'Yahya Husseiny' 
   };
 
   settings = signal<AppSettings>(this.loadSettings());

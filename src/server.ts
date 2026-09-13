@@ -7,7 +7,6 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { environment } from './environments/environment';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -27,8 +26,8 @@ app.post('/api/verify', async (req, res) => {
     }
 
     const loginPayload = {
-      usernameOrEmail: environment.knozApiUsername,
-      password: environment.knozApiPassword,
+      usernameOrEmail: process.env['KNOZ_API_USERNAME'],
+      password: process.env['KNOZ_API_PASSWORD'],
       appType: 0
     };
     
