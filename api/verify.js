@@ -1,6 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
@@ -13,8 +11,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const loginPayload = {
-      usernameOrEmail: process.env['KNOZ_API_USERNAME'],
-      password: process.env['KNOZ_API_PASSWORD'],
+      usernameOrEmail: process.env.KNOZ_API_USERNAME,
+      password: process.env.KNOZ_API_PASSWORD,
       appType: 0
     };
     
@@ -28,7 +26,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(loginResponse.status).json({ error: 'Failed to authenticate with Knoz API' });
     }
     
-    const loginData: any = await loginResponse.json();
+    const loginData = await loginResponse.json();
     const token = loginData.record?.token || loginData.token;
     
     if (!token) {
@@ -50,8 +48,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const courseData = await courseResponse.json();
     return res.status(200).json(courseData);
       
-  } catch (error: any) {
+  } catch (error) {
     console.error('Proxy error:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+};
