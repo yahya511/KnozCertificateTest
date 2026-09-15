@@ -175,16 +175,16 @@
           [disabled]="currentPage() === 1 || isLoading()"
           class="flex items-center gap-2 rounded-lg border border-knoz-gold/50 bg-white px-4 py-2.5 text-sm font-bold text-knoz-green shadow-sm transition-all hover:bg-knoz-gold/10 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
         >
-          <i class="fa-solid fa-chevron-left text-xs" [ngClass]="direction === 'rtl' ? 'fa-chevron-right' : 'fa-chevron-left'"></i>
-          {{ getText('prev') }}
+          <i class="fa-solid fa-chevron-left text-xs rtl:rotate-180"></i>
+          <span>{{ getText('prev') }}</span>
         </button>
         <button 
           (click)="nextPage()" 
           [disabled]="currentPage() === totalPages() || isLoading()"
           class="flex items-center gap-2 rounded-lg border border-knoz-gold/50 bg-white px-4 py-2.5 text-sm font-bold text-knoz-green shadow-sm transition-all hover:bg-knoz-gold/10 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
         >
-          {{ getText('next') }}
-          <i class="fa-solid fa-chevron-right text-xs" [ngClass]="direction === 'rtl' ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+          <span>{{ getText('next') }}</span>
+          <i class="fa-solid fa-chevron-right text-xs rtl:rotate-180"></i>
         </button>
       </div>
     </div>
