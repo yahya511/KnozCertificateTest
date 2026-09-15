@@ -88,51 +88,53 @@
   }
 
   <!-- Main Content Area -->
-  <main class="lg:ps-64 flex flex-col min-h-screen">
-    <!-- Mobile header with hamburger -->
-    <div class="sticky top-0 z-40 flex items-center justify-between bg-knoz-green p-4 lg:hidden shadow-md">
-      <h1 class="text-lg font-bold text-white">
-         {{ getText('academyName') }}
-      </h1>
-      <button type="button" (click)="openMobileSidebar()" class="rounded-lg p-2 text-white hover:bg-white/10 focus:outline-none">
-        ☰
-      </button>
+  <main class="lg:ps-64 flex flex-col min-h-screen pt-[140px] lg:pt-20">
+    
+    <div class="fixed top-0 start-0 end-0 z-40 flex flex-col lg:start-64 bg-white/90 backdrop-blur-md shadow-sm">
+      <!-- Mobile header with hamburger -->
+      <div class="flex items-center justify-between bg-knoz-green p-4 lg:hidden shadow-md">
+        <h1 class="text-lg font-bold text-white">
+           {{ getText('academyName') }}
+        </h1>
+        <button type="button" (click)="openMobileSidebar()" class="rounded-lg p-2 text-white hover:bg-white/10 focus:outline-none">
+          ☰
+        </button>
+      </div>
+
+      <!-- Header (Desktop/Tablet) -->
+      <header class="flex h-20 shrink-0 items-center justify-between border-b border-gray-200 px-6 lg:px-10">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-800 tracking-tight">
+             {{ getText(pageTitleKey) }}
+          </h2>
+        </div>
+        <div class="flex items-center gap-2 rounded-lg bg-gray-100 p-1 shadow-inner">
+          <button
+            type="button"
+            (click)="setLanguage('en')"
+            [class.bg-white]="currentLanguage === 'en'"
+            [class.shadow]="currentLanguage === 'en'"
+            [class.text-knoz-green]="currentLanguage === 'en'"
+            [class.text-gray-500]="currentLanguage !== 'en'"
+            class="rounded-md px-4 py-1.5 text-sm font-bold transition-all duration-200 hover:text-knoz-green">
+            EN
+          </button>
+          <button
+            type="button"
+            (click)="setLanguage('ar')"
+            [class.bg-white]="currentLanguage === 'ar'"
+            [class.shadow]="currentLanguage === 'ar'"
+            [class.text-knoz-green]="currentLanguage === 'ar'"
+            [class.text-gray-500]="currentLanguage !== 'ar'"
+            class="rounded-md px-4 py-1.5 text-sm font-bold transition-all duration-200 hover:text-knoz-green">
+            عربي
+          </button>
+        </div>
+      </header>
     </div>
 
-    <!-- Header (Desktop/Tablet) -->
-    <header class="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-gray-200 bg-white/90 backdrop-blur-md px-6 shadow-sm lg:px-10">
-      <div>
-        <h2 class="text-2xl font-bold text-gray-800 tracking-tight">
-           {{ getText(pageTitleKey) }}
-        </h2>
-      </div>
-
-      <div class="flex items-center gap-2 rounded-lg bg-gray-100 p-1 shadow-inner">
-        <button
-          type="button"
-          (click)="setLanguage('en')"
-          [class.bg-white]="currentLanguage === 'en'"
-          [class.shadow]="currentLanguage === 'en'"
-          [class.text-knoz-green]="currentLanguage === 'en'"
-          [class.text-gray-500]="currentLanguage !== 'en'"
-          class="rounded-md px-4 py-1.5 text-sm font-bold transition-all duration-200 hover:text-knoz-green">
-          EN
-        </button>
-        <button
-          type="button"
-          (click)="setLanguage('ar')"
-          [class.bg-white]="currentLanguage === 'ar'"
-          [class.shadow]="currentLanguage === 'ar'"
-          [class.text-knoz-green]="currentLanguage === 'ar'"
-          [class.text-gray-500]="currentLanguage !== 'ar'"
-          class="rounded-md px-4 py-1.5 text-sm font-bold transition-all duration-200 hover:text-knoz-green">
-          عربي
-        </button>
-      </div>
-    </header>
-
     <!-- Content Router Outlet -->
-    <div class="flex-1 w-full">
+    <div class="flex-1 w-full relative z-0">
       <router-outlet></router-outlet>
     </div>
   </main>
