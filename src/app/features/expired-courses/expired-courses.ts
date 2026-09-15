@@ -98,17 +98,4 @@ export class ExpiredCoursesComponent implements OnInit, OnDestroy {
       this.loadData();
     }
   }
-
-  navigateToCertificate(course: ExpiredCourse) {
-    this.router.navigate(['/certificates/create'], {
-      state: {
-        prefillData: {
-          sspId: course.sspId,
-          studentName: course.studentName,
-          courseName: course.planName,
-          issueDate: course.endDate
-        }
-      }
-    });
-  }
 }

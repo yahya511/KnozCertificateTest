@@ -1,0 +1,139 @@
+<div class="min-h-screen bg-gray-50" [attr.dir]="currentLanguage === 'ar' ? 'rtl' : 'ltr'">
+  <!-- Desktop Sidebar -->
+  <aside class="fixed inset-y-0 start-0 hidden w-64 bg-knoz-green lg:block">
+    <div class="flex h-full flex-col">
+      <!-- Logo -->
+      <div class="border-b border-white/10 p-6">
+        <h1 class="text-xl font-bold tracking-wide text-white">
+           {{ getText('academyName') }}
+        </h1>
+        <p class="mt-1 text-xs text-white/60">
+           {{ getText('certificateManagement') }}
+        </p>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 space-y-2 p-4">
+        <a routerLink="/dashboard" routerLinkActive="bg-white/10 text-white" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white">
+           <i class="fa-solid fa-chart-line w-5 text-center"></i>
+           {{ getText('dashboard') }}
+        </a>
+        <a routerLink="/certificates" routerLinkActive="bg-white/10 text-white" [routerLinkActiveOptions]="{exact: true}" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white">
+           <i class="fa-solid fa-certificate w-5 text-center"></i>
+           {{ getText('certificates') }}
+        </a>
+        <a routerLink="/expired-courses" routerLinkActive="bg-white/10 text-white" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white">
+           <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i>
+           <span>{{ getText('expiredCourses') }}</span>
+        </a>
+      </nav>
+
+      <!-- Footer -->
+      <div class="border-t border-white/10 p-4">
+        <a routerLink="/settings" routerLinkActive="bg-white/10 text-white" class="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-start text-sm font-medium text-white/70 transition hover:bg-white/10 hover:text-white">
+           <i class="fa-solid fa-gear w-5 text-center"></i>
+           {{ getText('settings') }}
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile Sidebar -->
+  @if (isMobileSidebarOpen) {
+  <!-- Overlay -->
+  <div (click)="closeMobileSidebar()" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden transition-opacity">
+  </div>
+  <!-- Sidebar -->
+  <aside class="fixed inset-y-0 start-0 z-50 flex w-64 flex-col bg-knoz-green shadow-2xl lg:hidden">
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b border-white/10 p-6">
+      <div>
+        <h1 class="text-xl font-bold tracking-wide text-white">
+           {{ getText('academyName') }}
+        </h1>
+        <p class="mt-1 text-xs text-white/60">
+           {{ getText('certificateManagement') }}
+        </p>
+      </div>
+      <!-- Close Button -->
+      <button type="button" (click)="closeMobileSidebar()" class="rounded-lg p-2 text-xl text-white/70 transition hover:bg-white/10 hover:text-white">
+        ✕
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 space-y-2 p-4">
+      <a routerLink="/dashboard" routerLinkActive="bg-white/10 text-white" (click)="closeMobileSidebar()" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white">
+         <i class="fa-solid fa-chart-line w-5 text-center"></i>
+         {{ getText('dashboard') }}
+      </a>
+      <a routerLink="/certificates" (click)="closeMobileSidebar()" routerLinkActive="bg-white/10 text-white" [routerLinkActiveOptions]="{exact: true}" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white">
+         <i class="fa-solid fa-certificate w-5 text-center"></i>
+         {{ getText('certificates') }}
+      </a>
+      <a routerLink="/expired-courses" (click)="closeMobileSidebar()" routerLinkActive="bg-white/10 text-white" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white">
+         <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i>
+         <span>{{ getText('expiredCourses') }}</span>
+      </a>
+    </nav>
+
+    <!-- Footer -->
+    <div class="border-t border-white/10 p-4">
+      <a routerLink="/settings" (click)="closeMobileSidebar()" routerLinkActive="bg-white/10 text-white" class="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-start text-sm font-medium text-white/70 transition hover:bg-white/10 hover:text-white">
+         <i class="fa-solid fa-gear w-5 text-center"></i>
+         {{ getText('settings') }}
+      </a>
+    </div>
+  </aside>
+  }
+
+  <!-- Main Content Area -->
+  <main class="lg:ps-64">
+    <!-- Mobile header with hamburger -->
+    <div class="flex items-center justify-between bg-knoz-green p-4 lg:hidden">
+      <h1 class="text-lg font-bold text-white">
+         {{ getText('academyName') }}
+      </h1>
+      <button type="button" (click)="openMobileSidebar()" class="rounded-lg p-2 text-white hover:bg-white/10 focus:outline-none">
+        ☰
+      </button>
+    </div>
+
+    <!-- Header (Desktop/Tablet) -->
+    <header class="flex h-20 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-sm lg:px-10">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800 tracking-tight">
+           {{ getText(pageTitleKey) }}
+        </h2>
+      </div>
+
+      <div class="flex items-center gap-2 rounded-lg bg-gray-100 p-1 shadow-inner">
+        <button
+          type="button"
+          (click)="setLanguage('en')"
+          [class.bg-white]="currentLanguage === 'en'"
+          [class.shadow]="currentLanguage === 'en'"
+          [class.text-knoz-green]="currentLanguage === 'en'"
+          [class.text-gray-500]="currentLanguage !== 'en'"
+          class="rounded-md px-4 py-1.5 text-sm font-bold transition-all duration-200 hover:text-knoz-green">
+          EN
+        </button>
+        <button
+          type="button"
+          (click)="setLanguage('ar')"
+          [class.bg-white]="currentLanguage === 'ar'"
+          [class.shadow]="currentLanguage === 'ar'"
+          [class.text-knoz-green]="currentLanguage === 'ar'"
+          [class.text-gray-500]="currentLanguage !== 'ar'"
+          class="rounded-md px-4 py-1.5 text-sm font-bold transition-all duration-200 hover:text-knoz-green">
+          عربي
+        </button>
+      </div>
+    </header>
+
+    <!-- Content Router Outlet -->
+    <div class="min-h-[calc(100vh-5rem)]">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

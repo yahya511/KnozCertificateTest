@@ -118,7 +118,7 @@ export class LoginComponent {
           this.feedbackType.set('success');
           this.feedbackMessage.set(res.message || this.getText('loginSuccess'));
           setTimeout(() => {
-            this.router.navigate(['/expired-courses']);
+            this.router.navigate(['/dashboard']);
           }, 1000);
         } else {
           this.feedbackType.set('error');
