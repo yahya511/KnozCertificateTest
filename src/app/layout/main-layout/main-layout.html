@@ -88,9 +88,9 @@
   }
 
   <!-- Main Content Area -->
-  <main class="lg:ps-64">
+  <main class="lg:ps-64 flex flex-col min-h-screen">
     <!-- Mobile header with hamburger -->
-    <div class="flex items-center justify-between bg-knoz-green p-4 lg:hidden">
+    <div class="sticky top-0 z-40 flex items-center justify-between bg-knoz-green p-4 lg:hidden shadow-md">
       <h1 class="text-lg font-bold text-white">
          {{ getText('academyName') }}
       </h1>
@@ -100,7 +100,7 @@
     </div>
 
     <!-- Header (Desktop/Tablet) -->
-    <header class="flex h-20 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-sm lg:px-10">
+    <header class="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-gray-200 bg-white/90 backdrop-blur-md px-6 shadow-sm lg:px-10">
       <div>
         <h2 class="text-2xl font-bold text-gray-800 tracking-tight">
            {{ getText(pageTitleKey) }}
@@ -132,7 +132,7 @@
     </header>
 
     <!-- Content Router Outlet -->
-    <div class="min-h-[calc(100vh-5rem)]">
+    <div class="flex-1 w-full">
       <router-outlet></router-outlet>
     </div>
   </main>
