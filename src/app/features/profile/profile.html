@@ -1,0 +1,168 @@
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+  <!-- Top Card -->
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="h-32 bg-[#0B3D2C] relative">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"></div>
+    </div>
+    <div class="px-6 sm:px-10 pb-8 flex flex-col sm:flex-row gap-6 relative">
+      <!-- Avatar -->
+      <div class="-mt-12 shrink-0 relative z-10 self-center sm:self-start">
+        <div class="relative">
+          @if(userInfo()?.image) {
+            <img [src]="userInfo()?.image" alt="Profile" class="h-32 w-32 rounded-full object-cover border-4 border-white bg-white shadow-sm" referrerpolicy="no-referrer" />
+          } @else {
+            <div class="h-32 w-32 rounded-full border-4 border-white bg-gradient-to-br from-[#1a4731] to-[#0B3D2C] flex items-center justify-center shadow-sm">
+               <span class="text-4xl font-extrabold text-[#cba153]">{{ initials }}</span>
+            </div>
+          }
+          @if(countryFlagUrl) {
+             <img [src]="countryFlagUrl" alt="Country Flag" class="absolute bottom-0 ltr:right-0 rtl:left-0 h-8 w-8 bg-white rounded-full shadow-sm border border-gray-100 object-cover z-20" />
+          } @else if(userInfo()?.country?.flag) {
+             <div class="absolute bottom-0 ltr:right-0 rtl:left-0 h-8 w-8 bg-white rounded-full shadow-sm border border-gray-100 flex items-center justify-center text-lg z-20">
+               {{ userInfo()?.country?.flag }}
+             </div>
+          }
+        </div>
+      </div>
+      <!-- User Details -->
+      <div class="pt-2 sm:pt-4 flex-1 text-center sm:text-start flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">{{ userInfo()?.fullName }}</h1>
+          <p class="text-gray-500 font-medium text-sm mt-1" dir="ltr">@{{ userInfo()?.userName }}</p>
+        </div>
+        <!-- Status Badge -->
+        <div class="shrink-0">
+           <span class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-sm font-medium text-green-700 border border-green-200/60">
+             <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+             </span>
+             {{ getText('activeMember') }}
+           </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Layout (Stacked Vertically) -->
+  <div class="flex flex-col gap-6">
+    
+    <!-- Contact Info Card (Soft Blue) -->
+    <div class="bg-blue-50/40 rounded-3xl p-6 sm:p-8 shadow-sm border border-blue-100/50">
+       <h2 class="text-base font-bold text-blue-900 mb-6 flex items-center gap-2">
+         <i class="fa-solid fa-address-book text-blue-500"></i>
+         {{ getText('contactInfo') }}
+       </h2>
+       <div class="space-y-5">
+         <div class="flex flex-col">
+           <span class="text-xs font-semibold uppercase text-blue-400/80 tracking-wider mb-1">{{ getText('email') }}</span>
+           <span class="text-sm font-medium text-blue-950 break-words">{{ userInfo()?.email || getText('unknown') }}</span>
+         </div>
+         <div class="flex flex-col">
+           <span class="text-xs font-semibold uppercase text-blue-400/80 tracking-wider mb-1">{{ getText('phoneNumber') }}</span>
+           <span class="text-sm font-medium text-blue-950 break-words" dir="ltr">
+             @if(userInfo()?.phoneNumber) {
+                {{ userInfo()?.country?.code }} {{ userInfo()?.phoneNumber }}
+             } @else {
+                {{ getText('unknown') }}
+             }
+           </span>
+         </div>
+         <div class="flex flex-col">
+           <span class="text-xs font-semibold uppercase text-blue-400/80 tracking-wider mb-1">{{ getText('address') }}</span>
+           <span class="text-sm font-medium text-blue-950 break-words whitespace-normal">{{ userInfo()?.address || getText('unknown') }}</span>
+         </div>
+         @if(userInfo()?.country?.name) {
+           <div class="flex flex-col">
+             <span class="text-xs font-semibold uppercase text-blue-400/80 tracking-wider mb-1">{{ getText('country') }}</span>
+             <span class="text-sm font-medium text-blue-950 break-words">{{ userInfo()?.country?.name }}</span>
+           </div>
+         }
+       </div>
+    </div>
+
+    <!-- About Me Card (Soft Gold) -->
+    @if(userInfo()?.notes) {
+      <div class="bg-amber-50/40 rounded-3xl p-6 sm:p-8 shadow-sm border border-amber-100/50">
+         <h2 class="text-base font-bold text-amber-900 mb-4 flex items-center gap-2">
+           <i class="fa-solid fa-quote-left text-amber-500"></i>
+           {{ getText('aboutMe') }}
+         </h2>
+         <p class="text-sm text-amber-950/80 leading-relaxed whitespace-pre-wrap break-words">{{ userInfo()?.notes }}</p>
+      </div>
+    }
+
+    <!-- Personal Info Card (Soft Green) -->
+    <div class="bg-emerald-50/40 rounded-3xl p-6 sm:p-8 shadow-sm border border-emerald-100/50">
+       <h2 class="text-base font-bold text-emerald-900 mb-6 flex items-center gap-2">
+         <i class="fa-solid fa-user-tag text-emerald-600"></i>
+         {{ getText('personalInfo') }}
+       </h2>
+       <div class="space-y-5">
+         <div class="flex flex-col">
+           <span class="text-xs font-semibold uppercase text-emerald-500/80 tracking-wider mb-1">{{ getText('gender') }}</span>
+           <span class="text-sm font-medium text-emerald-950">
+             @if (userInfo()?.gender === 0) {
+                {{ getText('male') }}
+             } @else if (userInfo()?.gender === 1) {
+                {{ getText('female') }}
+             } @else {
+                {{ getText('unknown') }}
+             }
+           </span>
+         </div>
+         <div class="flex flex-col">
+           <span class="text-xs font-semibold uppercase text-emerald-500/80 tracking-wider mb-1">{{ getText('dateOfBirth') }}</span>
+           <span class="text-sm font-medium text-emerald-950">
+             @if (userInfo()?.dateOfBirth && userInfo()?.dateOfBirth !== '0001-01-01') {
+                {{ userInfo()?.dateOfBirth | date:'longDate' }}
+             } @else {
+                {{ getText('unknown') }}
+             }
+           </span>
+         </div>
+       </div>
+    </div>
+
+    <!-- Account Details Card (Soft Purple) -->
+    <div class="bg-purple-50/40 rounded-3xl p-6 sm:p-8 shadow-sm border border-purple-100/50">
+       <h2 class="text-base font-bold text-purple-900 mb-6 flex items-center gap-2">
+         <i class="fa-solid fa-shield-halved text-purple-500"></i>
+         {{ getText('accountDetails') }}
+       </h2>
+       <div class="space-y-5">
+         <div class="flex flex-col">
+           <span class="text-xs font-semibold uppercase text-purple-400/80 tracking-wider mb-1">{{ getText('role') }}</span>
+           <span class="text-sm font-medium text-purple-950 break-words">
+              @if(userInfo()?.jobTitle) {
+                {{ userInfo()?.jobTitle }}
+              } @else if (userInfo()?.userType === 1) {
+                {{ getText('admin') }}
+              } @else if (userInfo()?.userType === 2) {
+                {{ getText('student') }}
+              } @else {
+                {{ getText('unknown') }}
+              }
+           </span>
+         </div>
+         <div class="flex flex-col">
+           <span class="text-xs font-semibold uppercase text-purple-400/80 tracking-wider mb-1">{{ getText('language') }}</span>
+           <span class="text-sm font-medium text-purple-950 break-words">
+              {{ userInfo()?.preference?.languageName || getText('unknown') }}
+           </span>
+         </div>
+         <div class="flex flex-col">
+           <span class="text-xs font-semibold uppercase text-purple-400/80 tracking-wider mb-1">{{ getText('hireDate') }}</span>
+           <span class="text-sm font-medium text-purple-950">
+             @if (userInfo()?.hireDate && userInfo()?.hireDate !== '0001-01-01') {
+                {{ userInfo()?.hireDate | date:'longDate' }}
+             } @else {
+                {{ getText('unknown') }}
+             }
+           </span>
+         </div>
+       </div>
+    </div>
+
+  </div>
+</div>

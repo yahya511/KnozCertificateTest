@@ -42,6 +42,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./features/expired-courses/expired-courses').then(c => c.ExpiredCoursesComponent)
             },
             {
+                path: 'profile',
+                loadComponent: () => import('./features/profile/profile').then(c => c.ProfileComponent)
+            },
+            {
                 path: 'settings',
                 loadComponent: () => import('./features/settings/settings').then(c => c.SettingsComponent)
             }

@@ -5,6 +5,7 @@ import { DICTIONARY, Language } from '../../core/mock/dictionary';
 import { LanguageService } from '../../core/services/language-service';
 import { LoadingService } from '../../core/services/loading-service';
 import { Certificate } from '../../core/models/certificate';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,9 +17,11 @@ export class Dashboard implements OnInit {
   private readonly certificateService = inject(CertificateService);
   private readonly loadingService = inject(LoadingService);
   private readonly languageService = inject(LanguageService);
+  private readonly authService = inject(AuthService);
   
   readonly dictionary = DICTIONARY;
   certificates: Certificate[] = [];
+  userName = this.authService.getUserName();
 
   get totalCertificates(): number {
     return this.certificates.length;
@@ -35,6 +38,7 @@ export class Dashboard implements OnInit {
   ngOnInit(): void {
     this.loadingService.show();
     this.certificates = [...this.certificateService.getCertificates()].reverse();
+    this.userName = this.authService.getUserName();
     this.loadingService.hide();
   }
 
