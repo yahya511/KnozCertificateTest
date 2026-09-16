@@ -14,7 +14,7 @@
   </div>
 
   <!-- Main Container -->
-  <div class="w-full max-w-5xl bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden relative z-10 border border-white flex flex-col md:flex-row">
+  <div class="w-full max-w-4xl bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden relative z-10 border border-white flex flex-col">
     
     <!-- Error State (Full Width) -->
     <div *ngIf="hasError()" class="w-full p-12 text-center flex flex-col items-center justify-center min-h-[400px]">
@@ -31,56 +31,56 @@
     <!-- Success State -->
     <ng-container *ngIf="courseData() && !hasError()">
       
-      <!-- Side Panel (Hero / Identity) -->
-      <div class="md:w-[45%] bg-gradient-to-b from-knoz-green to-[#0a4a35] p-10 md:p-12 flex flex-col items-center justify-center text-center relative overflow-hidden text-white shrink-0">
-        <!-- Decorative subtle pattern inside side panel -->
+      <!-- Top Panel (Hero / Identity) -->
+      <div class="w-full bg-gradient-to-b from-knoz-green to-[#0a4a35] p-10 md:p-14 flex flex-col items-center justify-center text-center relative overflow-hidden text-white shrink-0">
+        <!-- Decorative subtle pattern inside top panel -->
         <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0l30 30-30 30L0 30z\' fill=\'%23ffffff\' fill-rule=\'evenodd\'/%3E%3C/svg%3E'); background-size: 40px 40px; background-position: center;"></div>
         <div class="absolute top-0 start-0 w-full h-1.5 bg-gradient-to-r from-knoz-gold via-yellow-200 to-knoz-gold z-20"></div>
         
         <div class="relative z-10 w-full flex flex-col items-center">
           
           <!-- Academy Logo -->
-          <div class="w-24 h-24 bg-white rounded-2xl p-2 mx-auto shadow-2xl mb-10 border border-white/20 transform rotate-3 hover:rotate-0 transition-transform duration-500">
-            <img src="/assets/logo.jpeg" class="w-full h-full object-contain rounded-xl" alt="Knoz Academy" />
+          <div class="w-28 h-28 bg-white rounded-3xl p-3 mx-auto shadow-2xl mb-12 border border-white/20 transform hover:scale-105 transition-transform duration-500">
+            <img src="/assets/logo.jpeg" class="w-full h-full object-contain rounded-2xl" alt="Knoz Academy" />
           </div>
 
           <!-- Elaborate Pulsing Verification Badge -->
-          <div class="relative w-36 h-36 mx-auto mb-10">
+          <div class="relative w-40 h-40 mx-auto mb-10">
             <!-- Pulsing outer glow -->
             <div class="absolute inset-0 bg-knoz-gold rounded-full animate-ping opacity-40 duration-[3000ms]"></div>
             <div class="absolute inset-2 bg-yellow-400 rounded-full animate-pulse opacity-20"></div>
             
             <!-- Main Badge Container -->
-            <div class="relative w-full h-full bg-gradient-to-br from-knoz-gold to-yellow-600 rounded-full flex items-center justify-center border-4 border-white/20 shadow-[0_0_30px_rgba(200,165,89,0.5)] overflow-hidden">
+            <div class="relative w-full h-full bg-gradient-to-br from-knoz-gold to-yellow-600 rounded-full flex items-center justify-center border-[6px] border-white/20 shadow-[0_0_40px_rgba(200,165,89,0.5)] overflow-hidden">
               <!-- Background starburst/certificate icon -->
-              <i class="fa-solid fa-certificate text-8xl text-yellow-300 opacity-30 absolute scale-125 animate-[spin_10s_linear_infinite]"></i>
+              <i class="fa-solid fa-certificate text-[6rem] text-yellow-300 opacity-30 absolute scale-125 animate-[spin_10s_linear_infinite]"></i>
               <!-- Foreground official checkmark -->
-              <i class="fa-solid fa-check text-6xl text-white relative z-10 drop-shadow-lg"></i>
+              <i class="fa-solid fa-check text-[4rem] text-white relative z-10 drop-shadow-xl"></i>
             </div>
             
             <!-- Floating Shield Icon -->
-            <div class="absolute -bottom-2 -end-2 bg-white text-knoz-green w-12 h-12 rounded-full flex items-center justify-center border-2 border-knoz-gold shadow-xl z-20">
-              <i class="fa-solid fa-shield-halved text-xl"></i>
+            <div class="absolute -bottom-3 -end-3 bg-white text-knoz-green w-14 h-14 rounded-full flex items-center justify-center border-4 border-knoz-gold shadow-2xl z-20">
+              <i class="fa-solid fa-shield-halved text-2xl"></i>
             </div>
           </div>
 
-          <h2 class="text-3xl lg:text-4xl font-bold font-['Amiri'] mb-3 tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-white to-knoz-gold/90">{{ texts['verifiedSuccessTitle'] }}</h2>
-          <p class="text-knoz-gold/90 text-sm lg:text-base mb-10 font-medium">{{ texts['verificationSubtitle'] }}</p>
+          <h2 class="text-4xl lg:text-5xl font-bold font-['Amiri'] mb-4 tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-white to-knoz-gold/90">{{ texts['verifiedSuccessTitle'] }}</h2>
+          <p class="text-knoz-gold/90 text-base lg:text-lg mb-12 font-medium">{{ texts['verificationSubtitle'] }}</p>
 
           <!-- Certified Person Details -->
-          <div class="w-full bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-inner">
-            <p class="text-sm text-white/70 mb-2">{{ texts['verifiedCertifies'] }}</p>
-            <h3 class="text-2xl lg:text-3xl font-bold text-white mb-3 font-['Amiri']">{{ courseData()?.course?.studentName || texts['certificateOwner'] }}</h3>
-            <div class="w-16 h-px bg-knoz-gold/50 mx-auto my-4"></div>
-            <p class="text-sm text-white/70">{{ texts['verifiedCompleted'] }}</p>
-            <p class="text-xl font-bold text-knoz-gold mt-2 font-['Amiri']">{{ courseData()?.course?.planName }}</p>
+          <div class="w-full max-w-3xl mx-auto bg-white/10 backdrop-blur-xl rounded-[2rem] p-8 md:p-10 border border-white/10 shadow-inner">
+            <p class="text-base text-white/80 mb-3 font-medium">{{ texts['verifiedCertifies'] }}</p>
+            <h3 class="text-3xl md:text-5xl font-bold text-white mb-6 font-['Amiri'] leading-tight">{{ courseData()?.course?.studentName || texts['certificateOwner'] }}</h3>
+            <div class="w-24 h-px bg-knoz-gold/50 mx-auto my-6"></div>
+            <p class="text-base text-white/80 mb-3 font-medium">{{ texts['verifiedCompleted'] }}</p>
+            <p class="text-2xl md:text-3xl font-bold text-knoz-gold mt-2 font-['Amiri'] leading-tight">{{ courseData()?.course?.planName }}</p>
           </div>
 
         </div>
       </div>
 
-      <!-- Main Content Panel (Course Details) -->
-      <div class="md:w-[55%] p-8 md:p-12 lg:p-16 bg-white flex flex-col justify-center relative">
+      <!-- Bottom Content Panel (Course Details) -->
+      <div class="w-full p-8 md:p-12 lg:p-16 bg-white flex flex-col justify-center relative">
         
         <!-- Decorative watermark in background -->
         <i class="fa-solid fa-shield-check absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] text-slate-50 opacity-50 pointer-events-none"></i>
